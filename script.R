@@ -8,6 +8,7 @@ str(data)
 
 #The first step in processing text data involves creating a corpus,which refers to a collection of text documents (SMS messages)
 
+library(NLP)
 library(tm)
 twitter_corpus <- Corpus(VectorSource(data$tweet))
 print(twitter_corpus)
