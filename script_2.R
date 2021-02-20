@@ -1,0 +1,1 @@
+data <- read.delim(offensive_hate_words.txt)
