@@ -56,6 +56,7 @@ prop.table(table(data$class))
 prop.table(table(twitter_raw_train$class))
 prop.table(table(twitter_raw_test$class))
 
+View(twitter_raw_train)
 #Visualizing text data: word clouds
 library(wordcloud)
 wordcloud(twitter_corpus_train,min.freq = 100,random.order=FALSE, colors=brewer.pal(4,"Dark2"))
@@ -63,7 +64,7 @@ wordcloud(twitter_corpus_train,min.freq = 100,random.order=FALSE, colors=brewer.
 
 #Visualizing text data: word cloud of hate
 hate <- subset(twitter_raw_train, class == 0)
-hate_corpus <- Corpus(VectorSource(data$tweet))
+hate_corpus <- Corpus(VectorSource(hate))
 hate_corpus_clean<-tm_map(hate_corpus, tolower)
 hate_corpus_clean<-tm_map(hate_corpus_clean,removeNumbers)
 hate_corpus_clean<-tm_map(hate_corpus_clean,removeWords,stopwords())
@@ -73,11 +74,11 @@ hate_dtm <- DocumentTermMatrix(hate_corpus_clean)
 
 
 #Visualizing text data: word cloud of hate
-wordcloud(hate_corpus_clean,min.freq = 100,random.order=FALSE, colors=brewer.pal(4,"Dark2"))
+wordcloud(hate_corpus_clean,min.freq = 50,random.order=FALSE, colors=brewer.pal(4,"Dark2"))
 
 #Visualizing text data: word cloud of offensive
 offensive <- subset(twitter_raw_train, class == 1)
-offensive_corpus <- Corpus(VectorSource(data$tweet))
+offensive_corpus <- Corpus(VectorSource(offensive))
 offensive_corpus_clean<-tm_map(offensive_corpus, tolower)
 offensive_corpus_clean<-tm_map(offensive_corpus_clean,removeNumbers)
 offensive_corpus_clean<-tm_map(offensive_corpus_clean,removeWords,stopwords())
@@ -89,9 +90,9 @@ wordcloud(offensive_corpus_clean,min.freq = 100,random.order=FALSE, colors=brewe
 
 
 #Visualizing text data: word cloud of neither
-twitter_raw_train$class <- as.factor(twitter_raw_train$class)
+
 neither <- subset(twitter_raw_train, class == 2)
-neither_corpus <- Corpus(VectorSource(data$tweet))
+neither_corpus <- Corpus(VectorSource(neither))
 neither_corpus_clean<-tm_map(neither_corpus, tolower)
 neither_corpus_clean<-tm_map(neither_corpus_clean,removeNumbers)
 neither_corpus_clean<-tm_map(neither_corpus_clean,removeWords,stopwords())
@@ -99,7 +100,7 @@ neither_corpus_clean<-tm_map(neither_corpus_clean,removePunctuation)
 neither_corpus_clean<-tm_map(neither_corpus_clean,stripWhitespace)
 neither_dtm <- DocumentTermMatrix(neither_corpus_clean)
 
-wordcloud(neither_corpus_clean,min.freq = 100,random.order=FALSE, colors=brewer.pal(4,"Dark2"))
+wordcloud(neither_corpus_clean,min.freq = 50,random.order=FALSE, colors=brewer.pal(4,"Dark2"))
 
 
 #Creating indicator features for frequent words
